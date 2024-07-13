@@ -1,26 +1,40 @@
 from setuptools import find_packages,setup
 from typing import List
 
-HYPEN_E_DOT='-e .'
-def get_requirements(file_path:str)->List[str]:
-    '''
-    this function will return the list of requirements
-    '''
-    requirements=[]
-    with open(file_path) as file_obj:
-        requirements=file_obj.readlines()
-        requirements=[req.replace("\n","") for req in requirements]
 
-        if HYPEN_E_DOT in requirements:
-            requirements.remove(HYPEN_E_DOT)
+trigger = '-e .'
+def get_requirements(file_path:str)->List[str]:
+    '''This function will return the list of requirements'''
+
+    requirements = []
+    with open('requirements.txt') as f:
+        requirements = f.readlines()
+        requirements = [ req.replace('\n','') for req in requirements ]
+
+    if trigger in requirements:
+        requirements.remove(trigger)
     
     return requirements
 
+
 setup(
-name='StudentPerformance',
-version='0.0.1',
-author='Shruti',
-author_email='shrutiroychowdhury22@gmail.com',
-packages=find_packages(),
-install_requires=get_requirements('requirements.txt')
+    name = 'mlproject',
+    version = '0.0.1',
+    author = 'Shruti',
+    author_email ='shrutiroychowdhury22@gmail.com',
+    packages = find_packages(),
+    # when find_packages runs, it will find in every folder the '__init__.py' file,
+    # in our case we have __init__ in src, so it will consider the src as package it 
+    # will build __init__. 
+    install_requires = get_requirements('requirements.txt'),
+    # ['pandas','numpy','seaborn'] we cant write like this if we have 100s of requirements,
+    # thats why we made function get_requirements
+    
+    
+
+
+
 )
+
+
+
